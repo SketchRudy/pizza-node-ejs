@@ -8,11 +8,10 @@
 </head>
 <body>
     <h1>Order Summary</h1>
-
-    <% for (let i=0; i < orders.length; i++) { %>
-        <p><%= orders[i].fname %> <%= orders[i].lname %></p>
+    
+    <% for (let i = 0; i < orders.length; i++ ) { %>
+        <p><%= orders[i].fname %> <%= orders[i].lname%> <%= orders[i].email%> <%= orders[i].method %> <%= orders[i].size %></p>
         <hr>
-    <% } %>
-
+    <% } %> 
 </body>
 </html>

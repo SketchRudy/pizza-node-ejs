@@ -63,8 +63,8 @@ app.get('/admin', async (req, res) => {
 app.post('/thankyou', async (req, res) => {
 
     const order = {
-        fname: req.body.fname,
-        lname: req.body.lname,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         method: req.body.method,
         toppings: req.body.toppings,
@@ -78,27 +78,37 @@ app.post('/thankyou', async (req, res) => {
         return;
     }
 
-    //Connect to the database
+    // Connect to the database
     const conn = await connect();
 
-    //Convert toppings to a string
-    if (order.toppings) {
+
+    // Convert toppings to a string
+    if (order.toppings){
         if (Array.isArray(order.toppings)) {
             order.toppings = order.toppings.join(",");
         }
     } else {
         order.toppings = "";
     }
-
+         
     // Add the order to our database
-    const insertQuery = await conn.query(`insert into orders 
-        (fname, lname, email, size, method, toppings)
-        values (?, ?, ?, ?, ?, ?)`,
-        [ order.fname, order.lname, order.email, order.size, 
-        order.method, order.toppings ]);
+    const insertQuery = await conn.query(`INSERT INTO orders (
+	firstName,
+    lastName,
+    email,
+    method,
+    toppings,
+    size
+) VALUES (?, ?, ?, ?, ?, ?)`,
+	[ order.firstName,
+    order.lastname,
+    order.email,
+    order.method,
+    order.toppings,
+    order.size ]);
 
-    // INSERT INTO tbl (field1, field2) VALUES (?, ?)
-    
+    // INSERT INTO tb1 (field1, field2) VALUES (?, ?)
+
     // Send our thank you page
     res.render('thankyou', { order });
 });
